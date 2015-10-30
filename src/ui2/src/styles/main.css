@@ -1,0 +1,168 @@
+@import "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
+
+/* Stiziles */
+
+html, body {
+  background: #fff;
+  margin-left: 5px;
+}
+
+h3 {
+  font-size: 24pt;
+  color: #8f8f9d;
+  margin-bottom: 3px;
+}
+
+h2 {
+  font-size: 18pt;
+  color: #8f8f9d;
+  margin: 5px;
+}
+
+input[type=text] {
+  height: 25pt;
+  width: 250px;
+  border-color: #8f8f9d;
+  border-radius: 5px;
+  border-style: dotted;
+  border-width: thin;
+  margin-right: 5px;
+  padding: 5px;
+}
+
+button {
+  height: 25pt;
+  border-color: #8f8f9d;
+  border-radius: 5px;
+}
+
+/* main */
+
+.main {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  color: #000;
+}
+
+/* =================== APP SPECIFIC ADDITIONS =================== */
+.profile-container {
+  border: 1px solid #8f8f9d;
+  border-radius: 3px;
+  margin: 5px;
+}
+
+.profile-title-container {
+  height: 24pt;
+  font-size: 20pt;
+  background: #8f8f9d;
+  cursor: pointer;
+  padding-left: 2px;
+}
+
+.profile-name {
+  width: 94%;
+  display: inline-block;
+}
+
+.profile-action {
+  width: 10px;
+  margin: 2px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.profile-body-container-show-false {
+  visibility: hidden;
+  height: 0px;
+}
+
+.profile-body-container-show-true {
+  visibility: visible;
+  height: auto;
+}
+
+.environment {
+  margin: 5px;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+
+.environment-list-header {
+  margin-left: 5px;
+  font-size: 14pt;
+}
+
+.environment-title {
+  height: 20pt;
+  font-size: 16pt;
+  background: #fff;
+  padding-left: 2px;
+  background: #8f8f9d;
+  cursor: pointer;
+}
+
+.environment-add-form {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.environment-del {
+  width: 8px;
+  margin: 2px;
+  padding: 2px;
+}
+
+.tokens {
+  padding-left: 20px;
+}
+
+.token-title {
+  font-size: 12pt;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.token-value {
+  font-size: 10pt;
+}
+
+.action {
+  padding-left: 5px;
+  font-size: 9pt;
+}
+
+.workspaces {
+  padding-left: 20px;
+}
+
+.workspace-title {
+  font-size: 12pt;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.workspace-value {
+  font-size: 10pt;
+}
+/* ============================================================== */
+
+/* transitions */
+
+.fade-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+}

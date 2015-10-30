@@ -3,8 +3,10 @@
  */
 package com.boundlessgeo.ps.tm.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,8 +25,8 @@ public class Profile {
 
 	private String appUsername;
 
-	@OneToMany(mappedBy = "profile")
-	private List<Environment> environments;
+	@OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+	private List<Environment> environments = new ArrayList<Environment>();
 
 	protected Profile() {
 
@@ -67,6 +69,21 @@ public class Profile {
 	 */
 	public void setAppUsername(String appUsername) {
 		this.appUsername = appUsername;
+	}
+
+	/**
+	 * @return the environments
+	 */
+	public List<Environment> getEnvironments() {
+		return environments;
+	}
+
+	/**
+	 * @param environments
+	 *            the environments to set
+	 */
+	public void setEnvironments(List<Environment> environments) {
+		this.environments = environments;
 	}
 
 	/*

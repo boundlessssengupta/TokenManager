@@ -3,8 +3,10 @@
  */
 package com.boundlessgeo.ps.tm.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -29,15 +31,15 @@ public class Environment {
 
 	private String geoserverUrl;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PROFILE_ID")
 	private Profile profile;
 
-	@OneToMany(mappedBy = "environment")
-	private List<Token> tokens;
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	private List<Token> tokens = new ArrayList<Token>();
 
-	@OneToMany(mappedBy = "environment")
-	private List<Workspace> workspaces;
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	private List<Workspace> workspaces = new ArrayList<Workspace>();
 
 	/**
 	 * @return the id
@@ -158,8 +160,7 @@ public class Environment {
 		result = prime * result + (id == null ? 0 : id.hashCode());
 		result = prime * result + (name == null ? 0 : name.hashCode());
 		result = prime * result + (profile == null ? 0 : profile.hashCode());
-		result = prime * result
-				+ (tokens == null ? 0 : tokens.hashCode());
+		result = prime * result + (tokens == null ? 0 : tokens.hashCode());
 		result = prime * result
 				+ (workspaces == null ? 0 : workspaces.hashCode());
 		return result;
@@ -253,8 +254,7 @@ public class Environment {
 		builder.append(profile);
 		builder.append(", tokens=");
 		builder.append(tokens != null
-				? tokens.subList(0, Math.min(tokens.size(), maxLen))
-				: null);
+				? tokens.subList(0, Math.min(tokens.size(), maxLen)) : null);
 		builder.append(", workspaces=");
 		builder.append(workspaces != null
 				? workspaces.subList(0, Math.min(workspaces.size(), maxLen))
