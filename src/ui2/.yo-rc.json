@@ -1,8 +1,0 @@
-{
-  "generator-react-webpack": {
-    "app-name": "ui2",
-    "architecture": "reflux",
-    "styles-language": "css",
-    "component-suffix": "js"
-  }
-}

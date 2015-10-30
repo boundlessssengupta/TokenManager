@@ -1,48 +1,62 @@
 var React = require('react/addons');
+var Reflux = require('reflux');
+
+var EnvironmentStore = require('../stores/EnvironmentStore');
+var ActiveProfileStore = require('../stores/ActiveProfileStore');
+
+var ProfileActions = require('../actions/ProfileActions');
+var ActiveProfileActions = require('../actions/ActiveProfileActions');
+var EnvironmentActions = require('../actions/EnvironmentActions');
+
 var EnvironmentList = require('./EnvironmentList');
+var EnvironmentAddForm = require('./EnvironmentAddForm');
 
 var Profile = React.createClass({
+  mixins: [Reflux.connect(EnvironmentStore, 'environmentList'),
+    Reflux.connect(ActiveProfileStore, 'activeProfile')],
   getInitialState: function() {
     return {
-      environmentList: []
+      profileDisplayState: false
     };
   },
-  componentDidMount: function() {
-    var url = this.props.data._links.environments.href;
-    $.ajax({
-      url: url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({
-          environmentList: data._embedded.environments
-        });
-      }.bind(this),
-      error: function(xhr, textStatus, errorThrown) {
-        this.setState({
-          textStatus: textStatus,
-          errorThrown: errorThrown
-        });
-      }.bind(this)
-    });
+  componentDidUpdate: function(nextProps) {
+    var thisProfile = nextProps.data.appUsername;
+    var activeProfile = this.state.activeProfile;
+
+    if (thisProfile === activeProfile) {
+      this.state.profileDisplayState = !this.state.profileDisplayState;
+
+      if (this.state.profileDisplayState) {
+        EnvironmentActions.load(this.props.data._links.environments.href);
+
+        this.refs.profileBody.getDOMNode().className = 'profile-body-container-show-true';
+      }
+    } else {
+      this.refs.profileBody.getDOMNode().className = 'profile-body-container-show-false';
+    }
   },
-  handleProfileExpansion: function() {
+  handleProfileToggle: function() {
+    ActiveProfileActions.toggle(this.props.data.appUsername);
   },
   handleProfileDelete: function() {
+    ProfileActions.delete(this.props.data._links.self.href);
   },
   render: function() {
     return (
-      <div key={this.props.data.appUsername} className="profile">
-        <div className="profile-title">
-          <span className="profile-bars">
-            <i className="fa fa-bars" onClick={this.handleProfileExpansion}></i>
+      <div key={this.props.data._links.self.href} data-id={this.props.data._links.self.href} className="profile-container">
+        <div className="profile-title-container">
+          <span className="profile-name">Profile name: {this.props.data.appUsername}</span>
+          <span className="profile-action">
+            <i className="fa fa-toggle-down" onClick={this.handleProfileToggle}></i>
           </span>
-          <span className="profile-del" onClick={this.handleProfileDelete}>
+          <span className="profile-action" onClick={this.handleProfileDelete}>
             <i className="fa fa-times"></i>
           </span>
-          <span>Profile: {this.props.data.appUsername}</span>
         </div>
-        <EnvironmentList environmentList={this.state.environmentList} />
+        <div className={'profile-body-container-show-' + this.state.profileDisplayState} ref="profileBody">
+          <EnvironmentAddForm profile={this.props.data._links.self.href} />
+          <EnvironmentList environments={this.state.environmentList} profile={this.props.data.appUsername} />
+        </div>
       </div>
     );
   }

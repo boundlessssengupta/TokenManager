@@ -10,6 +10,13 @@ html, body {
 h3 {
   font-size: 24pt;
   color: #8f8f9d;
+  margin-bottom: 3px;
+}
+
+h2 {
+  font-size: 18pt;
+  color: #8f8f9d;
+  margin: 5px;
 }
 
 input[type=text] {
@@ -39,13 +46,13 @@ button {
 }
 
 /* =================== APP SPECIFIC ADDITIONS =================== */
-.profile {
+.profile-container {
   border: 1px solid #8f8f9d;
   border-radius: 3px;
   margin: 5px;
 }
 
-.profile-title {
+.profile-title-container {
   height: 24pt;
   font-size: 20pt;
   background: #8f8f9d;
@@ -53,40 +60,57 @@ button {
   padding-left: 2px;
 }
 
-.profile-exp-minimized {
-  width: 10px;
+.profile-name {
+  width: 94%;
+  display: inline-block;
 }
 
-.profile-bars {
-  width: 10px;
-  margin: 2px;
-  padding: 2px;
-}
-
-.profile-del {
+.profile-action {
   width: 10px;
   margin: 2px;
   padding: 2px;
+  cursor: pointer;
 }
 
-.profile-body-minimized {
-  min-height: 0px;
+.profile-body-container-show-false {
+  visibility: hidden;
+  height: 0px;
 }
 
-.profile-body-maximized {
-  min-height: 100px;
+.profile-body-container-show-true {
+  visibility: visible;
+  height: auto;
 }
 
 .environment {
-  padding: 5px;
-  margin: 2px;
+  margin: 5px;
   border: 1px solid #000;
+  border-radius: 3px;
+}
+
+.environment-list-header {
+  margin-left: 5px;
+  font-size: 14pt;
 }
 
 .environment-title {
+  height: 20pt;
   font-size: 16pt;
   background: #fff;
   padding-left: 2px;
+  background: #8f8f9d;
+  cursor: pointer;
+}
+
+.environment-add-form {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.environment-del {
+  width: 8px;
+  margin: 2px;
+  padding: 2px;
 }
 
 .tokens {

@@ -2,11 +2,6 @@ var React = require('react/addons');
 var Profile = require('./Profile');
 
 var ProfileList = React.createClass({
-  getInitialState: function() {
-    return {
-      expansionState: '+'
-    };
-  },
   render: function() {
     var createProfile = function(profile) {
       return (
@@ -15,7 +10,10 @@ var ProfileList = React.createClass({
     };
     return (
       <div>
-        {this.props.profiles.map(createProfile)}
+        <h3>Currently there are {this.props.profiles.length} profile(s) available:</h3>
+        <div>
+          {this.props.profiles.map(createProfile)}
+        </div>
       </div>
     );
   }

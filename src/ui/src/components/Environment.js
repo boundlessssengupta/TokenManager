@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var TokenList = require('./TokenList');
 var WorkspaceList = require('./WorkspaceList');
+var EnvironmentActions = require('../actions/EnvironmentActions');
 
 var Environment = React.createClass({
   getInitialState: function() {
@@ -55,16 +56,20 @@ var Environment = React.createClass({
       }.bind(this)
     });
   },
-  handleProfileExpansion: function() {
-  },
-  handleProfileDelete: function() {
+  handleEnvironmentDelete: function() {
+    EnvironmentActions.delete(this.props.data._links.self.href.replace('{?projection}', ''));
   },
   render: function() {
     return (
-      <div key={this.props.data.name} className="environment">
+      <div key={this.props.data._links.self.href} data-id={this.props.data._links.self.href} className="environment">
         <div className="environment-title">
-          Environment: {this.props.data.name}
+          <span className="environment-del" onClick={this.handleEnvironmentDelete}>
+            <i className="fa fa-times"></i>
+          </span>
+          <span>Environment: {this.props.data.name}</span>
         </div>
+        <div className="token-title">App token: {this.props.data.appToken}</div>
+        <div className="token-title">GeoServer URL: {this.props.data.geoserverUrl}</div>
         <TokenList data={this.state.tokenList} />
         <WorkspaceList data={this.state.workspaceList} />
       </div>

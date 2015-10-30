@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var ProfileActions = require('../actions/ProfileActions');
 
 var ProfileAddForm = React.createClass({
   getInitialState: function() {
@@ -16,18 +17,19 @@ var ProfileAddForm = React.createClass({
 
     var profileName = this.state.newProfileName;
 
-    if (!profileName) {
-      return;
+    if (profileName) {
+      ProfileActions.add(profileName);
     }
-
-    this.props.onSubmit(profileName);
   },
   render: function() {
     return (
-      <form className="profileAddForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Enter profile name" value={this.state.newProfileName} onChange={this.handleChange} />
-        <button>Add Profile</button>
-      </form>
+      <div>
+        <h3>Create a new profile</h3>
+        <form className="profileAddForm">
+          <input type="text" placeholder="Enter profile name" value={this.state.newProfileName} onChange={this.handleChange} />
+          <button onClick={this.handleSubmit}>Add Profile</button>
+        </form>
+      </div>
     );
   }
 });

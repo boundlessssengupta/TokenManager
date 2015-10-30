@@ -13,7 +13,7 @@ var ProfileList = require('./ProfileList');
 require('normalize.css');
 require('../styles/main.css');
 
-var Ui2App = React.createClass({
+var TokenManagerApp = React.createClass({
   mixins: [Reflux.connect(ProfileStore, "profileList")],
   componentDidMount: function() {
     ProfileActions.load();
@@ -30,4 +30,4 @@ var Ui2App = React.createClass({
   }
 });
 
-module.exports = Ui2App;
+module.exports = TokenManagerApp;
