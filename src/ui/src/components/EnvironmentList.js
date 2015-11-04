@@ -16,6 +16,7 @@ var EnvironmentList = React.createClass({
     if (environmentList && environmentList.length > 0) {
       return (
         <div>
+          <h2>List of current environments</h2>
           <div>
             {environmentList.map(createEnvironment, this.props)}
           </div>

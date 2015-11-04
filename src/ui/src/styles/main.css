@@ -102,6 +102,11 @@ button {
   cursor: pointer;
 }
 
+.environment-name {
+  width: 97%;
+  display: inline-block;
+}
+
 .environment-add-form {
   margin-left: 5px;
   margin-bottom: 5px;
@@ -123,6 +128,12 @@ button {
   padding-left: 10px;
 }
 
+.token-list-header {
+  margin-left: 25px;
+  font-size: 9pt;
+}
+
+
 .token-value {
   font-size: 10pt;
 }
@@ -130,6 +141,7 @@ button {
 .action {
   padding-left: 5px;
   font-size: 9pt;
+  cursor: pointer;
 }
 
 .workspaces {
