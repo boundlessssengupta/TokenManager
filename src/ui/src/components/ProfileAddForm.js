@@ -4,29 +4,40 @@ var ProfileActions = require('../actions/ProfileActions');
 var ProfileAddForm = React.createClass({
   getInitialState: function() {
     return {
-      newProfileName: ''
+      applicationName: '',
+      owner: ''
     };
   },
-  handleChange: function(e) {
+  handleApplicationNameChange: function(e) {
     this.setState({
-      newProfileName: e.target.value
+      applicationName: e.target.value
+    });
+  },
+  handleOwnerChange: function(e) {
+    this.setState({
+      owner: e.target.value
     });
   },
   handleSubmit: function(e) {
     e.preventDefault();
 
-    var profileName = this.state.newProfileName;
+    var applicationName = this.state.applicationName;
+    var owner = this.state.owner;
 
-    if (profileName) {
-      ProfileActions.add(profileName);
+    if (applicationName && owner) {
+      ProfileActions.add({
+        applicationName: applicationName,
+        owner: owner
+      });
     }
   },
   render: function() {
     return (
       <div>
-        <h3>Create a new profile</h3>
+        <h3>Create a new application profile</h3>
         <form className="profileAddForm">
-          <input type="text" placeholder="Enter profile name" value={this.state.newProfileName} onChange={this.handleChange} />
+          <input type="text" placeholder="Enter application name" value={this.state.applicationName} onChange={this.handleApplicationNameChange} />
+          <input type="text" placeholder="Enter owner" value={this.state.owner} onChange={this.handleOwnerChange} />
           <button onClick={this.handleSubmit}>Add Profile</button>
         </form>
       </div>

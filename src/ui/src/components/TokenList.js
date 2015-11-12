@@ -5,14 +5,50 @@ var TokenActions = require('../actions/TokenActions');
 
 var TokenList = React.createClass({
   handleTokenAdd: function() {
-    TokenActions.generate(this.props.environmentUrl);
+    var environment = this.props.environment;
+    var environmentUrl = environment._links.self.href.replace('{?projection}', '');
+    var allTokensUrl = environmentUrl + '/tokens';
+
+    TokenActions.generate({
+      tokenValue: 'somedummyvalue',
+      environment: environmentUrl
+    }, allTokensUrl);
   },
   handleTokenRevokeAll: function() {
-    TokenActions.revokeAll(this.props.environmentUrl);
+    var environment = this.props.environment;
+    var environmentUrl = environment._links.self.href.replace('{?projection}', '');
+    var allTokensUrl = environmentUrl + '/tokens';
+
+    TokenActions.revokeAll(allTokensUrl);
+  },
+  shouldComponentUpdate: function(nextProps) {
+    var applicationName = nextProps.profile.applicationName;
+    var environmentName = nextProps.environment.name;
+    var tokenList = nextProps.data;
+
+    if (tokenList) {
+      if (tokenList.length === 0) {
+        return true;
+      }
+
+      if (tokenList[0] && tokenList[0]._embedded) {
+        var applicationNameFromToken = tokenList[0]._embedded.environment.profile.applicationName;
+        var environmentNameFromToken = tokenList[0]._embedded.environment.name;
+
+        if (applicationNameFromToken && environmentNameFromToken) {
+          if ((applicationNameFromToken === applicationName) &&
+                (environmentNameFromToken === environmentName)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   },
   render: function() {
     var createToken = function(token) {
-      return (
+     return (
         <Token data={token} />
       );
     };
@@ -32,7 +68,7 @@ var TokenList = React.createClass({
             </span>
           </div>
           <div>
-            {this.props.data.map(createToken)}
+            {this.props.data.map(createToken, this.props)}
           </div>
         </div>
       );
@@ -41,7 +77,7 @@ var TokenList = React.createClass({
         <div>
           <div className="token-title">
             <span>
-              Tokens ({this.props.data.length})
+              User Tokens ({this.props.data.length})
             </span>
             <span className="action" onClick={this.handleTokenAdd}>
               <i className="fa fa-plus"></i>

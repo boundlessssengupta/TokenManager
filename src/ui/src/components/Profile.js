@@ -20,7 +20,7 @@ var Profile = React.createClass({
     };
   },
   componentDidUpdate: function(nextProps) {
-    var thisProfile = nextProps.data.appUsername;
+    var thisProfile = nextProps.data.applicationName;
     var activeProfile = this.state.activeProfile;
 
     if (thisProfile === activeProfile) {
@@ -36,16 +36,19 @@ var Profile = React.createClass({
     }
   },
   handleProfileToggle: function() {
-    ActiveProfileActions.toggle(this.props.data.appUsername);
+    ActiveProfileActions.toggle(this.props.data.applicationName);
   },
   handleProfileDelete: function() {
     ProfileActions.delete(this.props.data._links.self.href);
   },
   render: function() {
     return (
-      <div key={this.props.data._links.self.href} data-id={this.props.data._links.self.href} className="profile-container">
+      <div className="profile-container">
         <div className="profile-title-container">
-          <span className="profile-name">Profile name: {this.props.data.appUsername}</span>
+          <span className="profile-name">
+            Application name: {this.props.data.applicationName}&nbsp;
+            Owner: {this.props.data.owner}
+          </span>
           <span className="profile-action">
             <i className="fa fa-toggle-down" onClick={this.handleProfileToggle}></i>
           </span>
@@ -54,8 +57,8 @@ var Profile = React.createClass({
           </span>
         </div>
         <div className={'profile-body-container-show-' + this.state.profileDisplayState} ref="profileBody">
-          <EnvironmentAddForm profile={this.props.data._links.self.href} />
-          <EnvironmentList environments={this.state.environmentList} profile={this.props.data.appUsername} />
+          <EnvironmentAddForm profile={this.props.data} />
+          <EnvironmentList environments={this.state.environmentList} profile={this.props.data} />
         </div>
       </div>
     );

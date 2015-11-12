@@ -23,7 +23,9 @@ public class Profile {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	private String appUsername;
+	private String applicationName;
+
+	private String owner;
 
 	@OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
 	private List<Environment> environments = new ArrayList<Environment>();
@@ -33,12 +35,12 @@ public class Profile {
 	}
 
 	/**
-	 * @param appUsername
+	 * @param applicationName
 	 * @param environment
 	 */
-	public Profile(String appUsername) {
+	public Profile(String appName) {
 		super();
-		this.appUsername = appUsername;
+		this.applicationName = appName;
 	}
 
 	/**
@@ -57,18 +59,33 @@ public class Profile {
 	}
 
 	/**
-	 * @return the appUsername
+	 * @return the applicationName
 	 */
-	public String getAppUsername() {
-		return appUsername;
+	public String getApplicationName() {
+		return applicationName;
 	}
 
 	/**
-	 * @param appUsername
-	 *            the appUsername to set
+	 * @param applicationName
+	 *            the applicationName to set
 	 */
-	public void setAppUsername(String appUsername) {
-		this.appUsername = appUsername;
+	public void setApplicationName(String appName) {
+		this.applicationName = appName;
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public String getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner
+	 *            the owner to set
+	 */
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 	/**
@@ -94,11 +111,11 @@ public class Profile {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ (appUsername == null ? 0 : appUsername.hashCode());
+		result = prime * result + (applicationName == null ? 0 : applicationName.hashCode());
 		result = prime * result
 				+ (environments == null ? 0 : environments.hashCode());
 		result = prime * result + (int) (id ^ id >>> 32);
+		result = prime * result + (owner == null ? 0 : owner.hashCode());
 		return result;
 	}
 
@@ -118,11 +135,11 @@ public class Profile {
 			return false;
 		}
 		Profile other = (Profile) obj;
-		if (appUsername == null) {
-			if (other.appUsername != null) {
+		if (applicationName == null) {
+			if (other.applicationName != null) {
 				return false;
 			}
-		} else if (!appUsername.equals(other.appUsername)) {
+		} else if (!applicationName.equals(other.applicationName)) {
 			return false;
 		}
 		if (environments == null) {
@@ -133,6 +150,13 @@ public class Profile {
 			return false;
 		}
 		if (id != other.id) {
+			return false;
+		}
+		if (owner == null) {
+			if (other.owner != null) {
+				return false;
+			}
+		} else if (!owner.equals(other.owner)) {
 			return false;
 		}
 		return true;
@@ -148,13 +172,14 @@ public class Profile {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Profile [id=");
 		builder.append(id);
-		builder.append(", appUsername=");
-		builder.append(appUsername);
+		builder.append(", applicationName=");
+		builder.append(applicationName);
+		builder.append(", owner=");
+		builder.append(owner);
 		builder.append(", environments=");
 		builder.append(environments != null
 				? environments.subList(0, Math.min(environments.size(), maxLen))
 				: null);
-		builder.append(", userTokens=");
 		builder.append("]");
 		return builder.toString();
 	}

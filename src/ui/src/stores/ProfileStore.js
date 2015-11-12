@@ -4,6 +4,10 @@ var Reflux = require('reflux');
 var HTTP = require('superagent');
 var ProfileActions = require('../actions/ProfileActions');
 
+var Constants = require('../Constants.js');
+
+var BaseProfilesUrl = Constants.BaseUrl + '/profiles';
+
 var ProfileStore = Reflux.createStore({
   listenables: [ProfileActions],
   init: function() {
@@ -15,43 +19,32 @@ var ProfileStore = Reflux.createStore({
     return this.profileList;
   },
   fetchAll: function() {
-    HTTP.get('http://localhost:8081/profiles')
+    HTTP.get(BaseProfilesUrl)
       .end(function(req, res) {
-        this.profileList = JSON.parse(res.text)._embedded.profiles;
-        this.trigger(this.profileList);
+        this.process(res.text);
       }.bind(this)
     );
   },
-  onAdd: function(appUsername) {
-    var self = this;
-
-    HTTP.post('http://localhost:8081/profiles')
+  onAdd: function(profile) {
+    HTTP.post(BaseProfilesUrl)
       .set('Content-Type', 'application/json')
-      .send(JSON.stringify({
-        appUsername: appUsername
-      }))
-      .end(function(req, res) {
-        var location = res.headers.location;
-        HTTP.get(location)
-          .end(function(reqI, resI) {
-            this.profileList.push(JSON.parse(resI.text));
-            this.trigger(this.profileList);
-          }.bind(self)
-        );
+      .send(JSON.stringify(profile))
+      .end(function() {
+        this.fetchAll();
       }.bind(this));
   },
-  onDelete: function(key) {
-    var self = this;
-
-    HTTP.del(key)
+  onDelete: function(profileUrl) {
+    HTTP.del(profileUrl)
       .end(function() {
-        HTTP.get('http://localhost:8081/profiles')
-          .end(function(reqI, resI) {
-            this.profileList = JSON.parse(resI.text)._embedded.profiles;
-            this.trigger(this.profileList);
-          }.bind(self)
-        );
+        this.fetchAll();
       }.bind(this));
+  },
+  process: function(jsonAsText) {
+    if (jsonAsText) {
+      this.profileList = (!JSON.parse(jsonAsText)._embedded) ? [] :
+        JSON.parse(jsonAsText)._embedded.profiles;
+      this.trigger(this.profileList);
+    }
   }
 });
 

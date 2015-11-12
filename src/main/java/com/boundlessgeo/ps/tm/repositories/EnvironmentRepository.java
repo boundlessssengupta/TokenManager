@@ -14,5 +14,5 @@ import com.boundlessgeo.ps.tm.model.EnvironmentWithProfileName;
  */
 @RepositoryRestResource(excerptProjection = EnvironmentWithProfileName.class)
 public interface EnvironmentRepository
-		extends CrudRepository<Environment, String> {
+		extends CrudRepository<Environment, Long> {
 }

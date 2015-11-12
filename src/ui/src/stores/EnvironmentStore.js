@@ -4,6 +4,10 @@ var Reflux = require('reflux');
 var HTTP = require('superagent');
 var EnvironmentActions = require('../actions/EnvironmentActions');
 
+var Constants = require('../Constants.js');
+
+var BaseEnvironmentsUrl = Constants.BaseUrl + '/environments';
+
 var EnvironmentStore = Reflux.createStore({
   listenables: [EnvironmentActions],
   init: function() {
@@ -16,42 +20,28 @@ var EnvironmentStore = Reflux.createStore({
   fetchAll: function(url) {
     HTTP.get(url)
       .end(function(req, res) {
-        this.environmentList = (!JSON.parse(res.text)._embedded) ? [] : JSON.parse(res.text)._embedded.environments;
-        this.trigger(this.environmentList);
+        this.process(res.text);
       }.bind(this)
     );
   },
-  onAdd: function(environment) {
-    var self = this;
-
-    HTTP.put('http://localhost:8081/environments/' + environment.name)
+  onAdd: function(environment, allEnvironmentsUrl) {
+    HTTP.post(BaseEnvironmentsUrl)
       .set('Content-Type', 'application/json')
-      .send(JSON.stringify({
-        name: environment.name,
-        appToken: environment.appToken,
-        geoserverUrl: environment.geoserverUrl,
-        profile: 'http://localhost:8081/environments' + environment.name + '/profile/' + environment.profile
-      }))
-      .end(function(req, res) {
-        var location = res.headers.location;
-        HTTP.get(location.concat('?projection=environmentWithProfileName'))
-          .end(function(reqI, resI) {
-            this.environmentList.push(JSON.parse(resI.text));
-            this.trigger(this.environmentList);
-          }.bind(self));
+      .send(JSON.stringify(environment))
+      .end(function() {
+        this.fetchAll(allEnvironmentsUrl);
       }.bind(this));
   },
-  onDelete: function(key) {
-    var self = this;
-
-    HTTP.del(key)
+  onDelete: function(environmentUrl, allEnvironmentsUrl) {
+    HTTP.del(environmentUrl)
       .end(function() {
-        HTTP.get('http://localhost:8081/environments')
-          .end(function(reqI, resI) {
-            this.environmentList = JSON.parse(resI.text)._embedded.environments;
-            this.trigger(this.environmentList);
-          }.bind(self));
+        this.fetchAll(allEnvironmentsUrl);
       }.bind(this));
+  },
+  process: function(jsonAsText) {
+    this.environmentList = (!JSON.parse(jsonAsText)._embedded) ? [] :
+      JSON.parse(jsonAsText)._embedded.environments;
+    this.trigger(this.environmentList);
   }
 });
 

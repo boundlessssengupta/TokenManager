@@ -15,15 +15,24 @@ var Environment = React.createClass({
   mixins: [Reflux.connect(TokenStore, 'tokenList'),
     Reflux.connect(WorkspaceStore, 'workspaceList')],
   componentDidMount: function() {
-    TokenActions.load(this.props.data._links.tokens.href);
+    var environment = this.props.data;
+    var environmentUrl = environment._links.self.href.replace('{?projection}', '');
+    var tokensUrl = environmentUrl + '/tokens';
+
+    TokenActions.load(tokensUrl);
     WorkspaceActions.load(this.props.data._links.workspaces.href);
   },
   handleEnvironmentDelete: function() {
-    EnvironmentActions.delete(this.props.data._links.self.href.replace('{?projection}', ''));
+    var environment = this.props.data;
+    var profile = this.props.profile;
+    var environmentUrl = environment._links.self.href.replace('{?projection}', '');
+    var allEnvironmentsUrl = profile._links.environments.href;
+
+    EnvironmentActions.delete(environmentUrl, allEnvironmentsUrl);
   },
   render: function() {
     return (
-      <div key={this.props.data._links.self.href} data-id={this.props.data._links.self.href} className='environment'>
+      <div className='environment'>
         <div className='environment-title'>
           <span className='environment-name'>Environment: {this.props.data.name}</span>
           <span className='environment-del' onClick={this.handleEnvironmentDelete}>
@@ -32,7 +41,7 @@ var Environment = React.createClass({
         </div>
         <div className='token-title'>App token: {this.props.data.appToken}</div>
         <div className='token-title'>GeoServer URL: {this.props.data.geoserverUrl}</div>
-        <TokenList data={this.state.tokenList} environmentUrl={this.props.data._links.self.href.replace('{?projection}', '')} />
+        <TokenList data={this.state.tokenList} environment={this.props.data} profile={this.props.profile} />
         <WorkspaceList data={this.state.workspaceList} />
       </div>
     );

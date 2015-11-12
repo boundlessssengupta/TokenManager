@@ -9,6 +9,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +25,8 @@ import com.boundlessgeo.ps.tm.TokenGenerator;
 public class Environment {
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	private String name;
 
@@ -44,7 +47,7 @@ public class Environment {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -52,7 +55,7 @@ public class Environment {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -157,7 +160,7 @@ public class Environment {
 		result = prime * result + (appToken == null ? 0 : appToken.hashCode());
 		result = prime * result
 				+ (geoserverUrl == null ? 0 : geoserverUrl.hashCode());
-		result = prime * result + (id == null ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ id >>> 32);
 		result = prime * result + (name == null ? 0 : name.hashCode());
 		result = prime * result + (profile == null ? 0 : profile.hashCode());
 		result = prime * result + (tokens == null ? 0 : tokens.hashCode());
@@ -196,11 +199,7 @@ public class Environment {
 		} else if (!geoserverUrl.equals(other.geoserverUrl)) {
 			return false;
 		}
-		if (id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		} else if (!id.equals(other.id)) {
+		if (id != other.id) {
 			return false;
 		}
 		if (name == null) {

@@ -4,11 +4,9 @@ var Environment = require('./Environment');
 var EnvironmentList = React.createClass({
   render: function() {
     var createEnvironment = function(environment) {
-      if (this.profile === environment.profile.appUsername) {
-        return (
-          <Environment data={environment} />
-        );
-      }
+      return (
+        <Environment data={environment} profile={this} />
+      );
     };
 
     var environmentList = this.props.environments ? this.props.environments : [];
@@ -18,7 +16,7 @@ var EnvironmentList = React.createClass({
         <div>
           <h2>List of current environments</h2>
           <div>
-            {environmentList.map(createEnvironment, this.props)}
+            {environmentList.map(createEnvironment, this.props.profile)}
           </div>
         </div>
       );

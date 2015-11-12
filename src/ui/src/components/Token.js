@@ -4,9 +4,9 @@ var TokenActions = require('../actions/TokenActions');
 
 var Token = React.createClass({
   handleTokenDelete: function() {
-    var urlOfTokenToBeDeleted = this.props.data._links.self.href;
-    var urlOfTokensToBeFetched = this.props.data._embedded.environment._links.self.href.replace('{?projection}', '') + '/tokens';
-    TokenActions.revoke(urlOfTokenToBeDeleted, urlOfTokensToBeFetched);
+    var tokenUrl = this.props.data._links.self.href;
+    var allTokensUrl = this.props.data._embedded.environment._links.self.href.replace('{?projection}', '') + '/tokens';
+    TokenActions.revoke(tokenUrl, allTokensUrl);
   },
   render: function() {
     return (

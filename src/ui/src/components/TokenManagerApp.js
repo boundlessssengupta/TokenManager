@@ -14,7 +14,7 @@ require('normalize.css');
 require('../styles/main.css');
 
 var TokenManagerApp = React.createClass({
-  mixins: [Reflux.connect(ProfileStore, "profileList")],
+  mixins: [Reflux.connect(ProfileStore, 'profileList')],
   componentDidMount: function() {
     ProfileActions.load();
   },
