@@ -42,7 +42,7 @@ var Environment = React.createClass({
         <div className='token-title'>App token: {this.props.data.appToken}</div>
         <div className='token-title'>GeoServer URL: {this.props.data.geoserverUrl}</div>
         <TokenList data={this.state.tokenList} environment={this.props.data} profile={this.props.profile} />
-        <WorkspaceList data={this.state.workspaceList} />
+        <WorkspaceList data={this.state.workspaceList} environment={this.props.data} />
       </div>
     );
   }

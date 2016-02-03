@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var EnvironmentActions = require('../actions/EnvironmentActions');
+var WorkspaceActions = require('../actions/WorkspaceActions');
 
 var EnvironmentAddForm = React.createClass({
   getInitialState: function() {

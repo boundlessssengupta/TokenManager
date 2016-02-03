@@ -3,7 +3,10 @@
 var Reflux = require('reflux');
 
 var WorkspaceActions = Reflux.createActions([
-  'load'
+  'load',
+  'add',
+  'delete',
+  'syncWithGeoServer'
 ]);
 
 module.exports = WorkspaceActions;
