@@ -4,7 +4,6 @@ var WorkspaceActions = require('../actions/WorkspaceActions');
 
 var Workspace = React.createClass({
   handleWorkspaceAdd: function() {
-    debugger;
     var environmentUrl = this.props.environment._links.self.href.replace('{?projection}', '');
 
     WorkspaceActions.add({

@@ -18,6 +18,10 @@ public interface EnvironmentWithProfileName {
 
 	String getGeoserverUrl();
 
+	String getGeoserverUser();
+
+	String getGeoserverPassword();
+
 	List<Token> getTokens();
 
 	List<Workspace> getWorkspaces();
