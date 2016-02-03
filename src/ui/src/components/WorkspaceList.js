@@ -1,12 +1,7 @@
 var React = require('react/addons');
 var Workspace = require('./Workspace');
 
-var WorkspaceActions = require('../actions/WorkspaceActions');
-
 var WorkspaceList = React.createClass({
-  handleSyncWithGeoServer: function() {
-    WorkspaceActions.syncWithGeoServer('url');
-  },
   render: function() {
     var createWorkspace = function(workspace) {
       return (
@@ -15,11 +10,7 @@ var WorkspaceList = React.createClass({
     };
     return (
       <div>
-        <div className="workspace-title">Workspaces ({this.props.data.length})
-          <span className="action" onClick={this.handleSyncWithGeoServer}>
-            <i className="fa fa-refresh"></i>
-          </span>
-        </div>
+        <div className="workspace-title">Workspaces ({this.props.data.length})</div>
         <div className="workspaces">
           {this.props.data.map(createWorkspace, this)}
         </div>

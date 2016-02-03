@@ -12,12 +12,12 @@ var Workspace = React.createClass({
     }, this.props.environment._links.workspaces.href);
   },
   handleWorkspaceDelete: function() {
-    // var tokenUrl = this.props.data._links.self.href;
-    // var allTokensUrl = this.props.data._embedded.environment._links.self.href.replace('{?projection}', '') + '/tokens';
-    // TokenActions.revoke(tokenUrl, allTokensUrl);
+    var workspaceUrl = this.props.data._links.self.href;
+
+    WorkspaceActions.delete(workspaceUrl, this.props.environment._links.workspaces.href);
   },
   render: function() {
-    if (this.props.data.active) {
+    if (this.props.data.registered) {
       return (
         <div className="workspace">
           <span className="workspace-name">{this.props.data.name}</span>
