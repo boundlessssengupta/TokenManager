@@ -34,6 +34,10 @@ public class Environment {
 
 	private String geoserverUrl;
 
+	private String geoserverUser;
+
+	private String geoserverPassword;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PROFILE_ID")
 	private Profile profile;
@@ -117,6 +121,34 @@ public class Environment {
 	 */
 	public void setGeoserverUrl(String geoserverUrl) {
 		this.geoserverUrl = geoserverUrl;
+	}
+
+	/**
+	 * @return the geoserverUser
+	 */
+	public String getGeoserverUser() {
+		return geoserverUser;
+	}
+
+	/**
+	 * @param geoserverUser the geoserverUser to set
+	 */
+	public void setGeoserverUser(String geoserverUser) {
+		this.geoserverUser = geoserverUser;
+	}
+
+	/**
+	 * @return the geoserverPassword
+	 */
+	public String getGeoserverPassword() {
+		return geoserverPassword;
+	}
+
+	/**
+	 * @param geoserverPassword the geoserverPassword to set
+	 */
+	public void setGeoserverPassword(String geoserverPassword) {
+		this.geoserverPassword = geoserverPassword;
 	}
 
 	/**

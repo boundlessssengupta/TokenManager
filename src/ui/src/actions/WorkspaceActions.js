@@ -3,7 +3,9 @@
 var Reflux = require('reflux');
 
 var WorkspaceActions = Reflux.createActions([
-  'load'
+  'load',
+  'add',
+  'delete'
 ]);
 
 module.exports = WorkspaceActions;

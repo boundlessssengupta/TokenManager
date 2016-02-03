@@ -4,6 +4,9 @@ var Reflux = require('reflux');
 var HTTP = require('superagent');
 var WorkspaceActions = require('../actions/WorkspaceActions');
 
+var Constants = require('../Constants.js');
+var BaseWorkspacesUrl = Constants.BaseUrl + '/workspaces';
+
 var WorkspaceStore = Reflux.createStore({
   listenables: [WorkspaceActions],
   init: function() {
@@ -20,6 +23,20 @@ var WorkspaceStore = Reflux.createStore({
         this.trigger(this.workspaceList);
       }.bind(this)
     );
+  },
+  onAdd: function(workspace, allWorkspacesUrl) {
+    HTTP.post(BaseWorkspacesUrl)
+      .set('Content-Type', 'application/json')
+      .send(JSON.stringify(workspace))
+      .end(function() {
+        this.fetchAll(allWorkspacesUrl);
+      }.bind(this));
+  },
+  onDelete: function(workspaceUrl, allWorkspacesUrl) {
+    HTTP.del(workspaceUrl)
+      .end(function() {
+        this.fetchAll(allWorkspacesUrl);
+      }.bind(this));
   }
 });
 

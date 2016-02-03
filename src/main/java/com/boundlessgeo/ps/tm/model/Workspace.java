@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 /**
  * @author ssengupta
@@ -26,6 +27,9 @@ public class Workspace {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ENVIRONMENT_ID")
 	private Environment environment;
+
+    @Transient
+    private boolean registered;
 
 	/**
 	 * @return the id
@@ -71,6 +75,20 @@ public class Workspace {
 	public void setEnvironment(Environment environment) {
 		this.environment = environment;
 	}
+
+    /**
+     * @return the registered
+     */
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    /**
+     * @param registered the registered to set
+     */
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
 
 	/*
 	 * (non-Javadoc)

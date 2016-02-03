@@ -23,8 +23,8 @@ war {
     baseName = 'tokenmanager'
     version = '0.0.1-SNAPSHOT'
 }
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -43,6 +43,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
 	compile("org.springframework.boot:spring-boot-starter-data-rest")
 	compile("com.fasterxml.uuid:java-uuid-generator:3.1.4")
+	compile("com.netflix.feign:feign-core:8.14.2")
+	compile("com.netflix.feign:feign-gson:8.14.2")
 	runtime("org.postgresql:postgresql:9.4-1201-jdbc41")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testCompile("org.springframework.boot:spring-boot-starter-test") 
