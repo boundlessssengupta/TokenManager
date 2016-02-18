@@ -19,14 +19,16 @@ h2 {
   margin: 5px;
 }
 
-input[type=text] {
+input {
   height: 25pt;
   width: 250px;
   border-color: #8f8f9d;
   border-radius: 5px;
   border-style: dotted;
   border-width: thin;
+  margin-top: 5px;
   margin-right: 5px;
+  margin-bottom: 3px;
   padding: 5px;
 }
 
@@ -116,6 +118,10 @@ button {
   width: 8px;
   margin: 2px;
   padding: 2px;
+}
+
+.token-add-form-container {
+  margin-left: 10px;
 }
 
 .tokens {

@@ -28,9 +28,11 @@ public class Token {
 
 	private String tokenValue;
 
+	private String userName;
+
 	private long createdDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ENVIRONMENT_ID")
 	private Environment environment;
 
@@ -80,6 +82,21 @@ public class Token {
 	}
 
 	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName
+	 *            the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
 	 * @return the createdDate
 	 */
 	public long getCreatedDate() {
@@ -111,7 +128,9 @@ public class Token {
 		result = prime * result
 				+ (environment == null ? 0 : environment.hashCode());
 		result = prime * result + (int) (id ^ id >>> 32);
-		result = prime * result + (tokenValue == null ? 0 : tokenValue.hashCode());
+		result = prime * result
+				+ (tokenValue == null ? 0 : tokenValue.hashCode());
+		result = prime * result + (userName == null ? 0 : userName.hashCode());
 		return result;
 	}
 
@@ -149,6 +168,13 @@ public class Token {
 				return false;
 			}
 		} else if (!tokenValue.equals(other.tokenValue)) {
+			return false;
+		}
+		if (userName == null) {
+			if (other.userName != null) {
+				return false;
+			}
+		} else if (!userName.equals(other.userName)) {
 			return false;
 		}
 		return true;

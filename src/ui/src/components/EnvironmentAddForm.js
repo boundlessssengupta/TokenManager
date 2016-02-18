@@ -54,6 +54,13 @@ var EnvironmentAddForm = React.createClass({
         profile: finalProfileUrl
       }, this.props.profile._links.environments.href);
     }
+
+    this.setState({
+      environmentName: '',
+      geoServerUrl: '',
+      geoServerUser: '',
+      geoServerPassword: ''
+    });
   },
   render: function() {
     return (
@@ -63,7 +70,7 @@ var EnvironmentAddForm = React.createClass({
           <input type="text" placeholder="Enter environment name" value={this.state.environmentName} onChange={this.handleEnvironmentNameChange} id="environmentName" />
           <input type="text" placeholder="Enter GeoServer URL" value={this.state.geoServerUrl} onChange={this.handleGeoServerUrlChange} id="geoServerUrl" />
           <input type="text" placeholder="Enter GeoServer User" value={this.state.geoServerUser} onChange={this.handleGeoServerUserChange} id="geoServerUser" />
-          <input type="text" placeholder="Enter GeoServer Password" value={this.state.geoServerPassword} onChange={this.handleGeoServerPasswordChange} id="geoServerPassword" />
+          <input type="password" placeholder="Enter GeoServer Password" value={this.state.geoServerPassword} onChange={this.handleGeoServerPasswordChange} id="geoServerPassword" />
           <button onClick={this.handleSubmit}>Add Environment</button>
         </form>
       </div>

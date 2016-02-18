@@ -1,19 +1,20 @@
 var React = require('react/addons');
 var Token = require('./Token');
+var TokenAddForm = require('./TokenAddForm');
 
 var TokenActions = require('../actions/TokenActions');
 
 var TokenList = React.createClass({
-  handleTokenAdd: function() {
-    var environment = this.props.environment;
-    var environmentUrl = environment._links.self.href.replace('{?projection}', '');
-    var allTokensUrl = environmentUrl + '/tokens';
-
-    TokenActions.generate({
-      tokenValue: 'somedummyvalue',
-      environment: environmentUrl
-    }, allTokensUrl);
-  },
+  // handleTokenAdd: function() {
+  //   var environment = this.props.environment;
+  //   var environmentUrl = environment._links.self.href.replace('{?projection}', '');
+  //   var allTokensUrl = environmentUrl + '/tokens';
+  //
+  //   TokenActions.generate({
+  //     tokenValue: 'somedummyvalue',
+  //     environment: environmentUrl
+  //   }, allTokensUrl);
+  // },
   handleTokenRevokeAll: function() {
     var environment = this.props.environment;
     var environmentUrl = environment._links.self.href.replace('{?projection}', '');
@@ -60,12 +61,12 @@ var TokenList = React.createClass({
             <span>
               User Tokens ({this.props.data.length})
             </span>
-            <span className="action" onClick={this.handleTokenAdd}>
-              <i className="fa fa-plus"></i>
-            </span>
             <span className="action" onClick={this.handleTokenRevokeAll}>
               <i className="fa fa-minus"></i>
             </span>
+          </div>
+          <div>
+            <TokenAddForm environment={this.props.environment} />
           </div>
           <div>
             {this.props.data.map(createToken, this.props)}
@@ -79,9 +80,9 @@ var TokenList = React.createClass({
             <span>
               User Tokens ({this.props.data.length})
             </span>
-            <span className="action" onClick={this.handleTokenAdd}>
-              <i className="fa fa-plus"></i>
-            </span>
+          </div>
+          <div>
+            <TokenAddForm environment={this.props.environment} />
           </div>
           <div>
             <div className="token-list-header">No tokens have been generated yet.</div>

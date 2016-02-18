@@ -11,7 +11,7 @@ var Token = React.createClass({
   render: function() {
     return (
       <div className="tokens">
-        <span className="token-value">{this.props.data.tokenValue}</span>
+        <span className="token-value">{this.props.data.tokenValue} ({this.props.data.userName})</span>
         <span className="action" onClick={this.handleTokenDelete}>
           <i className="fa fa-times"></i>
         </span>
